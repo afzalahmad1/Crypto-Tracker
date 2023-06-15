@@ -3,6 +3,8 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 //import Footer from './components/Common/Footer'
 import HomePage from './pages/HomePage'
 import DashboardPage from "./pages/Dashboard";
+import CoinPage from "./pages/Coin";
+import ComparePage from "./pages/ComparePage";
 
 
 
@@ -19,9 +21,8 @@ const App = ()=>{
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<DashboardPage/>} />
-          {/*<Route path="/" element={Home} />
-          <Route path="/" element={Home} />
-  <Route path="/" element={Home} />*/}
+          <Route path="/coin/:id" element={<CoinPage />} />
+         <Route path="/compare" element={<ComparePage />} />
       </Routes>
       </BrowserRouter>
     </div>
