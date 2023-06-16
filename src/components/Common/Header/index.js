@@ -19,7 +19,7 @@ function Header() {
         <p className='link'>WatchList</p>
         </Link>
         <Link to="/dashboard">
-         <Button  text={"Dashboard"} onClick={()=> console.log("ggggggg")} />
+         <Button  text={"Dashboard"}/>
         </Link>
       </div>
       <div className="mobile-drawer">

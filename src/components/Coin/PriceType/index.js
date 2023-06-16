@@ -12,8 +12,8 @@ export default function TogglePriceType({priceType,handlePriceTypeChange}) {
       exclusive
       onChange={handlePriceTypeChange}
       sx={{
-        "& .Mui-selected": {
-          color: "var(--blue)",
+        "& .Mui-selected":{
+          color: "var(--blue) !important",
         },
         borderColor: "var(--blue) !important",
         border: "unset !important",

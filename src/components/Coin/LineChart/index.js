@@ -13,7 +13,7 @@ function LineChart({chartData, priceType, multiAxis}) {
         responsive: true,
         interaction: {
             mode: "index",
-            interasect: false,
+            intersect: false,
         },
         scales: {
             crypto1: {

@@ -9,6 +9,8 @@ import List from "../components/Dashboard/List";
 import CoinInfo from "../components/Coin/Coininfo";
 import { settingChartData } from "../functions/settingChartData";
 import LineChart from "../components/Coin/LineChart";
+import TogglePriceType from "../components/Coin/PriceType";
+import Loader from "../components/Common/Loader";
 
 function ComparePage() {
   const [crypto1, setCrypto1] = useState("bitcoin");
@@ -18,11 +20,30 @@ function ComparePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [priceType, setPriceType] = useState("prices");
   const [days, setDays] = useState(30);
-  const [chartData, setChartData] = useState({});
+  const [chartData, setChartData] = useState(null);
 
-  function handleDaysChange(event) {
+  async function handleDaysChange(event) {
+    setIsLoading(true);
     setDays(event.target.value);
+    const prices1 = await getCoinPrices(crypto1, event.target.value, priceType);
+    const prices2 = await getCoinPrices(crypto2, event.target.value, priceType);
+    settingChartData(setChartData, prices1, prices2);
+    setIsLoading(false);
   }
+  const handlePriceTypeChange = async (event, newType) => {
+    // console.log(newType)
+     setIsLoading(true);
+     if(newType !== null){
+       setPriceType(newType);
+       const prices1 = await getCoinPrices(crypto1, days, newType);
+       const prices2 = await getCoinPrices(crypto2, days, newType);
+       settingChartData(setChartData, prices1, prices2);
+       setIsLoading(false)
+       //console.log(typeof prices)
+     }else{
+       setIsLoading(false)
+     }
+    }
 
   useEffect(() => {
     getData();
@@ -40,8 +61,8 @@ function ComparePage() {
         const prices1 = await getCoinPrices(crypto1, days, priceType);
         const prices2 = await getCoinPrices(crypto2, days, priceType);
         settingChartData(setChartData, prices1, prices2);
-        // console.log("prices1"+prices1);
-        // console.log("prices2"+prices2);
+        //console.log(typeof prices1);
+        // console.log("prices2", prices2);
         setIsLoading(false);
       }
     }
@@ -56,23 +77,33 @@ function ComparePage() {
       coinObject(setCrypto2Data, data);
       const prices1 = await getCoinPrices(crypto1, days, priceType);
       const prices2 = await getCoinPrices(crypto2, days, priceType);
-      if (prices1.length > 0 && prices2.length > 0) {
-        // settingChartData(setChartData, prices);
+      settingChartData(setChartData, prices1, prices2);
         // console.log(" pricess1111====>",prices1);
         // console.log(" pricess22222====>",prices2);
         setIsLoading(false);
-      }
     } else {
       setCrypto1(event.target.value);
       //console.log("cr1",event.target.value);
       const data = await getCoinData(event.target.value); //here event.data.value == id
       coinObject(setCrypto1Data, data);
+      const prices1 = await getCoinPrices(crypto1, days, priceType);
+      const prices2 = await getCoinPrices(crypto2, days, priceType);
+      settingChartData(setChartData, prices1, prices2);
+      setIsLoading(false);
     }
   };
-  if (crypto1Data == null || crypto2Data == null) return null;
+  
+
+
+  if (crypto1Data == null || crypto2Data == null || chartData == null)
+    return null;
   return (
     <div>
       <Header />
+      {isLoading ? (
+           <Loader />
+      ) : (
+        <>
       <div className="coins-days-flex">
         <SelectCoins
           crypto1={crypto1}
@@ -93,11 +124,21 @@ function ComparePage() {
         <List coin={crypto2Data} />
       </div>
       <div className="grey-wrapper">
-            <LineChart chartData={chartData} priceType={"prices"} multiAxis={true}/>
+        <TogglePriceType
+          priceType={priceType}
+          handlePriceTypeChange={handlePriceTypeChange}
+        />
+        <LineChart
+          chartData={chartData}
+          priceType={priceType}
+          multiAxis={true}
+        />
       </div>
 
       <CoinInfo heading={crypto1Data.name} desc={crypto1Data.desc} />
       <CoinInfo heading={crypto2Data.name} desc={crypto2Data.desc} />
+      </>
+      )}
     </div>
   );
 }

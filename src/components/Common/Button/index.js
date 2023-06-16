@@ -2,9 +2,9 @@
 import React from 'react'
 import './styles.css'
 
-function Button({text, onClick, outlined}) {
+function Button({text, outlined}) {
   return (
-    <div className={outlined?'outlined-btn':'btn'} onClick={() => onClick()}>
+    <div className={outlined?'outlined-btn':'btn'} >
       {text}
     </div>
   )
