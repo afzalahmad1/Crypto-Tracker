@@ -54,10 +54,12 @@ export default function TabsComponent({ coins }) {
             <tbody className="list-table">
             {
               coins.map((coin,idx)=>{
-                return  <List  coin={coin} key={idx}/>
-              })
-            }
-            </tbody>
+                return(
+                  <List  coin={coin}  key={idx}/>
+                  )
+                })
+              }
+              </tbody>
           </table>
         </TabPanel>
       </TabContext>
