@@ -11,7 +11,6 @@ import { addToLocalStorage } from "../../../functions/addToLocalStorge";
 function Grid({ coin }) {
  //const [watchlist,setWatchlist] = useState([]);
  const [star,setStar] = useState(false);
- 
 
   function saveInLocalStorage(e,coin){
     e.preventDefault();
