@@ -107,5 +107,22 @@
     font-weight: 500;
 
 }
+.big-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1.5rem;
+}
+.star-item{
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: .1rem;
+    
+}
+
 
 

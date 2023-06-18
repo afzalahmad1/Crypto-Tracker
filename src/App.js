@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage'
 import DashboardPage from "./pages/Dashboard";
 import CoinPage from "./pages/Coin";
 import ComparePage from "./pages/ComparePage";
+import WatchList from "./pages/WatchList";
 
 
 
@@ -21,8 +22,9 @@ const App = ()=>{
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<DashboardPage/>} />
-          <Route path="/coin/:id" element={<CoinPage />} />
-         <Route path="/compare" element={<ComparePage />} />
+        <Route path="/coin/:id" element={<CoinPage />} />
+        <Route path="/compare" element={<ComparePage />} />
+        <Route path="/watchlist" element={<WatchList />} />
       </Routes>
       </BrowserRouter>
     </div>

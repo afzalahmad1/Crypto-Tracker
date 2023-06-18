@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./styles.css"
 import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
 import TrendingDownRoundedIcon from '@mui/icons-material/TrendingDownRounded';
 import { Tooltip } from '@mui/material';
 import { convertNumbers } from '../../../functions/convertNumbers';
 import { Link } from 'react-router-dom';
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from '@mui/icons-material/Star';
+import { addToLocalStorage } from '../../../functions/addToLocalStorge';
+import { removeFromWatchlist } from '../../../functions/removeFromWatchlist';
 
 function List({coin}) {
  // console.log("coin",coin);
+ const [star,setStar] = useState(false);
+
+ function saveInLocalStorage(e,coin){
+   e.preventDefault();
+   setStar(!star)
+   if(!star){
+     addToLocalStorage(coin.id);
+   }else{
+     removeFromWatchlist(coin.id)
+   }
+
+ }
   return (
     <Link to={`/coin/${coin.id}`}>
     <tr className='list-row'>
@@ -60,18 +76,31 @@ function List({coin}) {
       </td>
       </Tooltip >
       <Tooltip title="Market Cap" placement='bottom-end'>
-      <td className='desktop-td-mkt'>
+      <td className='desktop-td-mkt '>
          <p className='market-cap td-right-align'>{coin.market_cap.toLocaleString()}</p>
       </td>
       </Tooltip> 
-
-      {/* Display in mobile view only*/}
-       <Tooltip title="Market Cap" placement='bottom-end'>
-      <td className='mobile-td-mkt'>
-         <p className='market-cap td-right-align'>{convertNumbers(coin.market_cap.toLocaleString())}</p>
-      </td>
-      </Tooltip> 
-      
+      <Tooltip title="Watch Later" placement='bottom-end'>
+      <td>
+      <div
+            className="star-item-list"
+            style={{
+              border:
+                coin.price_change_percentage_24h < 0
+                  ? "2px solid var(--red)"
+                  : "2px solid var(--green)",
+              color:
+                coin.price_change_percentage_24h < 0
+                  ? "var(--red)"
+                  : "var(--green)",
+            }}
+            onClick={(e)=>{saveInLocalStorage(e,coin)}}
+          >
+            {star?<StarIcon />:<StarBorderIcon />}
+          </div>
+          </td>
+     
+      </Tooltip>
     </tr>
     </Link>
   )

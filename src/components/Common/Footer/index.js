@@ -3,7 +3,9 @@ import './styles.css'
 function index() {
   return (
     <div className='footer'>
-      Footer
+      <div>
+        <h1>CryptoTracker</h1>
+      </div>
     </div>
   )
 }
